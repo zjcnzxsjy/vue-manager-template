@@ -1,0 +1,86 @@
+.skeleton-wrapper {
+  padding: 24px;
+  .skeleton-main {
+    width: 100%;
+    display: flex;
+    .skeleton-main-avatar-wrapper {
+      vertical-align: top;
+      padding-right: 16px;
+      .skeleton-main-avatar {
+        display: inline-block;
+        vertical-align: top;
+        background-color: #f2f2f2;
+      }
+      .skeleton-main-avatar-circle {
+        border-radius: 50%;
+      }
+      .skeleton-main-avatar-large {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+      }
+      .skeleton-main-avatar-medium {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+      }
+      .skeleton-main-avatar-small {
+        width: 24px;
+        height: 24px;
+        line-height: 24px;
+      }
+    }
+    .skeleton-main-content {
+      vertical-align: top;
+      flex: 1;
+    }
+    .skeleton-title {
+      margin-top: 16px;
+      height: 16px;
+      background-color: #f2f2f2;
+      & + .skeleton-paragraph {
+        margin-top: 28px;
+      }
+    }
+    .skeleton-paragraph {
+      margin-bottom: 14px;
+      li {
+        height: 16px;
+        background-color: #f2f2f2;
+        list-style: none;
+        width: 100%;
+        & + li {
+          margin-top: 16px;
+        }
+        &:last-child:not(:first-child){
+          width: 61%;
+        }
+      }
+    }
+  }
+}
+@mixin skeleton-animation {
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  animation: ant-skeleton-loading 1.4s ease infinite;
+  background-size: 400% 100%;
+}
+.skeleton-active .skeleton-main-avatar {
+  background: linear-gradient(90deg, #f2f2f2 25%, #e6e6e6 37%, #f2f2f2 63%);
+  animation: ant-skeleton-loading 1.4s ease infinite;
+  background-size: 400% 100%;
+}
+.skeleton-active .skeleton-title {
+  @include skeleton-animation;
+}
+.skeleton-active .skeleton-paragraph > li {
+  @include skeleton-animation;
+}
+
+@keyframes ant-skeleton-loading {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0 50%;
+  }
+}
