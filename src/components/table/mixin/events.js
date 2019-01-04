@@ -1,5 +1,5 @@
 export default {
-  methds: {
+  methods: {
     /**
      * @description 行选中状态
      */
@@ -77,6 +77,13 @@ export default {
      */
     handleHeaderContextmenu (column, event) {
       this.$emit('header-contextmenu', column, event)
+    },
+    /**
+     * @description 排序状态
+     */
+    handleSortChange ({ column, prop, order }) {
+      this.handleSortDataChange()
+      this.$emit('sort-change', { column, prop, order })
     }
   }
 }

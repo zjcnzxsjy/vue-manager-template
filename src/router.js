@@ -34,11 +34,19 @@ export const routers = [
     icon: 'third-icon-icon-test'
   },
   {
-    id: '401',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
+    id: 'components',
+    path: '/components/',
+    name: '组件示例',
+    component: Layout,
+    icon: 'third-icon-icon-test',
+    children: [
+      {
+        id: "table",
+        path: "table",
+        name: "基础表格",
+        component: () => import("./views/components/Table.vue")
+      }
+    ]
   },
   {
     id: '402',

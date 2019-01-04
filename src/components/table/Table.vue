@@ -1,9 +1,9 @@
 <template>
   <div
     class='table-wraper'
-    :element-loading-text="loadingOptions.text? loadingOptions.text : null"
-    :element-loading-spinner="loadingOptions.spinner? loadingOptions.spinner : null"
-    :element-loading-background="loadingOptions.background? loadingOptions.background : null">
+    :element-loading-text="loadingOptions? handleAttribute(loadingOptions.text,null) : null"
+    :element-loading-spinner="loadingOptions? handleAttribute(loadingOptions.spinner,null) : null"
+    :element-loading-background="loadingOptions? handleAttribute(loadingOptions.background, null) : null">
       <div
         class='table-header' v-if="$slots.header">
         <slot name='header'></slot>
@@ -35,14 +35,17 @@
             :type='item.type? item.type : null'
             :prop='item.prop? item.prop : null'
             v-bind='item'>
-            <template 
+            <!-- <template
+              v-if='item.component' 
               slot-scope="scope">
-              <render-component
-                v-if='item.render'
+              <render-custom-component
+                v-if='item.component.name'
+                :component-name='item.component.name'
                 :title='scope.row[item.prop]'
-                v-bind='item.render'>
-              </render-component>
-            </template>
+                v-bind='item.component'
+                :scope='scope'>
+              </render-custom-component>
+            </template> -->
           </el-table-column>
         </el-table>
         <el-pagination
@@ -62,19 +65,23 @@
   </div>
 </template>
 <script>
-import base from './mixin/base'
 import data from './mixin/data'
+import events from './mixin/events'
+import pagination from './mixin/pagination'
+import utils from './mixin/utils'
 // 
 
-import renderComponent from './components/renderComponent.vue'
+import renderCustomComponent from './components/RenderCustomComponent.vue'
 export default {
   name: 'hsTable',
   mixins: [
-    base,
-    data
+    data,
+    events,
+    pagination,
+    utils
   ],
   components: {
-    renderComponent
+    renderCustomComponent
   }
 }
 </script>
