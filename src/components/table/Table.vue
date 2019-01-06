@@ -30,25 +30,36 @@
           @header-click="handleHeaderClick"
           @header-contextmenu="handleHeaderContextmenu">
           <el-table-column
+            v-if='!!indexColumn || indexColumn === ""'
+            type='index'
+            :label='indexColumn.label || ""'
+            v-bind='indexColumn'>
+          </el-table-column>
+          <el-table-column
+            v-if='selectColumn || selectColumn === ""'
+            type='selection'
+            v-bind='selectColumn'>
+          </el-table-column>
+          <el-table-column
             v-for="(item, index) in columns"
             :key='index'
-            :type='item.type? item.type : null'
             :prop='item.prop? item.prop : null'
             v-bind='item'>
-            <!-- <template
-              v-if='item.component' 
+            <template
               slot-scope="scope">
               <render-custom-component
-                v-if='item.component.name'
+                v-if='item.component && item.component.name'
                 :component-name='item.component.name'
                 :title='scope.row[item.prop]'
                 v-bind='item.component'
                 :scope='scope'>
               </render-custom-component>
-            </template> -->
+              <template v-else>{{item.formatter? item.formatter(scope.row, scope.column, scope.row[item.prop], scope.$index) : scope.row[item.prop]}}</template>
+            </template>
           </el-table-column>
         </el-table>
         <el-pagination
+          class='table-pagination'
           v-if='pagination'
           v-bind='pagination'
           @size-change="handlePaginationSizeChange"
@@ -61,7 +72,11 @@
         class='table-footer'>
         <slot name='footer'></slot>
       </div>
-      <el-dialog></el-dialog>
+      <el-dialog
+        :title='formMode === "edit"? editTitle : addTitle'
+        :visible.sync='isDialogShow'>
+        <slot name='dailogForm'></slot>
+      </el-dialog>
   </div>
 </template>
 <script>
@@ -69,19 +84,38 @@ import data from './mixin/data'
 import events from './mixin/events'
 import pagination from './mixin/pagination'
 import utils from './mixin/utils'
+import dialog from './mixin/dialog'
+import add from './mixin/add'
 // 
 
 import renderCustomComponent from './components/RenderCustomComponent.vue'
+
 export default {
   name: 'hsTable',
   mixins: [
     data,
     events,
     pagination,
-    utils
+    utils,
+    dialog,
+    add
   ],
   components: {
     renderCustomComponent
   }
 }
 </script>
+<style lang="scss" scoped>
+.table-wraper {
+  .table-header {
+    
+  }
+  .table-body {
+    padding: 15px 0;
+    overflow: hidden;
+  }
+  .table-pagination {
+    padding: 15px 0;
+  }
+}
+</style>

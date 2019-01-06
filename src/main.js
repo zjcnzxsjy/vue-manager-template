@@ -14,7 +14,9 @@ NProgress.configure({ showSpinner: false });
 
 Vue.config.productionTip = false;
 Vue.prototype.$request = request;
-Vue.use(ElementUI);
+Vue.use(ElementUI, {
+  size: 'mini'
+});
 
 const whiteList = ['/login'];
 

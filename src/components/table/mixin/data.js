@@ -34,6 +34,25 @@ export default {
     options: {
       type: Object,
       default: null
+    },
+    /**
+     * @description 表格配置
+     */
+    options: {
+      type: Object,
+      default: null
+    },
+    /**
+     * @description 索引
+     */
+    indexColumn: {
+      default: null
+    },
+    /**
+     * @description 多选
+     */
+    selectColumn: {
+      default: null
     }
   }
 }
