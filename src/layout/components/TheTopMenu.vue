@@ -51,10 +51,20 @@ export default {
       }
     },
     computed: {
-      ...mapGetters([
-        'menuTheme',
-        'accessedRouters'
-      ]),
+      // ...mapGetters([
+      //   'App/menuTheme',
+      //   'Permission/accessedRouters'
+      // ]),
+      ...mapGetters(
+        'Permission', {
+          accessedRouters: 'accessedRouters'
+        }
+      ),
+      ...mapGetters(
+        'App', {
+          menuTheme: 'menuTheme'
+        }
+      ),
       menuActived() {
         return this.$route.path;
       },

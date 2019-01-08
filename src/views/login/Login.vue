@@ -59,13 +59,14 @@ export default {
             .then(res => {
                 this.logining = false;
                 if (0 === res.data.code) {
-                    this.$store.dispatch('setUserInfo', res.data.data)
+                    this.$store.dispatch('User/setUserInfo', res.data.data)
                     .then(() => {
                         this.$router.push('/');
                     })
                 }
             })
             .catch(err => {
+                console.log(err);
                 this.logining = false;
                 this.$message({
                     message: '登录失败',

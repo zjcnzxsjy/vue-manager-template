@@ -3,35 +3,39 @@ import Router from "vue-router";
 import Layout from "./layout/Layout.vue";
 
 Vue.use(Router);
-export const routers = [
+
+let routers = [];
+function gatherRouters(items) {
+  Array.isArray(items) && items.forEach((item, index) => {
+    if('root' === item.pid) {
+      item.component = Layout;
+    }
+    if (item.children && item.children.length > 0) {
+      gatherRouters(item.children)
+    } else {
+      item.component = () => import(`./views/${item.componentUrl}`);
+    }
+  })
+  return items;
+}
+
+//子模块路由注册
+const requireRouter = require.context('./views', true, /router.js/);
+requireRouter.keys().forEach(fileName => {
+  const temp = gatherRouters({...requireRouter(fileName)}.routers);
+  if (temp) {
+    routers = routers.concat(temp);
+  }
+})
+
+
+const oriRouters = [
   {
     id: 'login',
     path: '/login',
     name: 'login',
     component: () => import("./views/login/Login.vue"),
     hidden: true
-  },
-  {
-    id: 'index',
-    path: '/',
-    redirect: '/mainIndex',
-    component: Layout,
-    icon: 'third-icon-dashbord',
-    children: [
-      {
-        id: "mainIndex",
-        path: "mainIndex",
-        name: "首页",
-        component: () => import("./views/dashbord/MainIndex.vue")
-      }
-    ]
-  },
-  {
-    id: '404',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
   },
   {
     id: 'components',
@@ -49,56 +53,7 @@ export const routers = [
     ]
   },
   {
-    id: '402',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '403',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '405',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '406',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '407',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '408',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '409',
-    path: '/404',
-    name: '404错误页面',
-    component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
-  },
-  {
-    id: '410',
+    id: '404',
     path: '/404',
     name: '404错误页面',
     component: () => import("./views/errorPage/404.vue"),
@@ -110,6 +65,10 @@ export const routers = [
     hidden: true
   }
 ];
+routers = routers.concat(oriRouters)
+
+export {routers};
+
 export default new Router({
   mode: "hash",
   base: process.env.BASE_URL,

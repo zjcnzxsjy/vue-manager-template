@@ -28,8 +28,15 @@ function filterRouters(routers, roles) {
 }
 
 const permission = {
+    namespaced: true,
     state: {
         accessedRouters: []
+    },
+    getters: {
+        //accessedRouters: state => state.accessedRouters
+        accessedRouters(state) {
+            return state.accessedRouters;
+        }
     },
     mutations: {
         SET_ACCESSED_ROUTERS(state, routers) {

@@ -1,7 +1,13 @@
 import {setUserInfo, removeUserInfo} from '@/utils/Authority'
 const user = {
+    namespaced: true,
     state: {
-        role: ''
+        roles: ''
+    },
+    getters: {
+        roles(state) {
+            return state.roles;
+        }
     },
     mutations: {
         SET_ROLE(state, roles) {
@@ -10,7 +16,6 @@ const user = {
     },
     actions: {
         setUserInfo({commit}, userInfo) {
-            console.log(userInfo)
             commit('SET_ROLE', userInfo.roles);
             setUserInfo(userInfo);
         },

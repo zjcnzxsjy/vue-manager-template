@@ -1,25 +1,23 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-// import app from './modules/App';
-// import user from './modules/User';
-// import permission from './modules/Permission';
-// import tabsView from './modules/TabsView';
-import getters from './getters.js';
+import {registerStoreModules} from '@/utils/Register';
+
 
 //get Vuex modules
-const requireModule = require.context('./modules', false, /\.js$/);
-const modules = {};
-requireModule.keys().forEach(fileName => {
-  const moduleName = fileName.replace(/(\.\/|\.js)/g, '');
-  modules[moduleName] = {
-    ...requireModule(fileName).default
-  }
+let modules = {};
+const baseModules = require.context('./modules', false, /\.js$/);
+
+modules = Object.assign(modules, registerStoreModules(baseModules));
+
+const subModules = require.context('@/views', true, /Store.js/);
+subModules.keys().forEach(fileName => {
+  modules = Object.assign(modules, {...subModules[fileName]});
 })
+console.log(modules);
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  modules,
-  getters
+  modules
 });
 
 export default store;

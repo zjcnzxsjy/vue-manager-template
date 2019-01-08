@@ -1,7 +1,14 @@
 const tabsView = {
+    namespaced: true,
     state: {
         visitedViews: [],
         cacheViews: []
+    },
+    getters: {
+        //visitedViews: state => state.visitedViews
+        visitedViews(state) {
+            return state.visitedViews;
+        }
     },
     mutations: {
         ADD_VISITED_VIEWS: (state, view) => {

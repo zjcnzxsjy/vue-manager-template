@@ -25,7 +25,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['layout'])
+        ...mapGetters('App', {
+            layout: 'layout'
+        })
     },
     methods: {
         handleClose() {

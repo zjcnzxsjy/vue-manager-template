@@ -1,3 +1,4 @@
+import { deepClone } from '@/utils/Base'
 export default {
   props: {
     /**
@@ -54,5 +55,25 @@ export default {
     selectColumn: {
       default: null
     }
+  },
+  data() {
+    return {
+      fields: []
+    }
+  },
+  computed: {
+    tableData() {
+      return deepClone(this.data);
+    }
+  },
+  methods: {
+    /**
+     * @description 更新行数据
+     * @param {Number} index 表格数据索引
+     * @param {Object} row 更新的表格行数据
+     */
+    handleUpdateRow (index, row) {
+      this.$set(this.tableData, index, row);
+    },
   }
 }

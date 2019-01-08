@@ -5,9 +5,9 @@
     :element-loading-spinner="loadingOptions? handleAttribute(loadingOptions.spinner,null) : null"
     :element-loading-background="loadingOptions? handleAttribute(loadingOptions.background, null) : null">
       <div
-        class='table-header' v-if="$slots.header">
-        <slot name='header'></slot>
+        class='table-header' v-if="$slots.header || $slots.form">
         <slot name='form'></slot>
+        <slot name='toolbar'></slot>
       </div>
       <div
         class='table-body'>
@@ -67,25 +67,33 @@
           @prev-click="handlePaginationPrevClick"
           @next-click="handlePaginationNextClick">
         </el-pagination>
+        <el-popover
+          ref="popover"
+          placement="top"
+          title="显示列设置"
+          width="200"
+          trigger="click"
+          class='table-column-set'>
+          <el-button slot="reference">显示列设置</el-button>
+        </el-popover>
       </div>
       <div
         class='table-footer'>
         <slot name='footer'></slot>
       </div>
-      <el-dialog
-        :title='formMode === "edit"? editTitle : addTitle'
-        :visible.sync='isDialogShow'>
-        <slot name='dailogForm'></slot>
-      </el-dialog>
+      <slot name='dialog'></slot>
   </div>
 </template>
 <script>
+import base from './mixin/base'
+import emitter from '../src/emitter'
 import data from './mixin/data'
 import events from './mixin/events'
 import pagination from './mixin/pagination'
 import utils from './mixin/utils'
 import dialog from './mixin/dialog'
 import add from './mixin/add'
+import edit from './mixin/edit'
 // 
 
 import renderCustomComponent from './components/RenderCustomComponent.vue'
@@ -93,15 +101,37 @@ import renderCustomComponent from './components/RenderCustomComponent.vue'
 export default {
   name: 'hsTable',
   mixins: [
+    base,
+    emitter,
     data,
     events,
     pagination,
     utils,
     dialog,
-    add
+    add,
+    edit
   ],
+  data() {
+    return {
+      formField: {},
+      dialogField: {}
+    }
+  },
   components: {
     renderCustomComponent
+  },
+  created() {
+    // this.$on('hs.addForm', (form) => {
+      
+    //   if (form) {
+    //     this.formField = form;
+    //   }
+    // })
+    this.$on('hs.addDialog', (dialog) => {
+      if (dialog) {
+        this.dialogField = dialog;
+      }
+    });
   }
 }
 </script>
@@ -115,6 +145,11 @@ export default {
     overflow: hidden;
   }
   .table-pagination {
+    float: left;
+    padding: 15px 0;
+  }
+  .table-column-set {
+    float: right;
     padding: 15px 0;
   }
 }

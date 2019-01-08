@@ -10,7 +10,7 @@ export function getUserInfo() {
 }
 
 export function setUserInfo(userInfo) {
-    Cookies.set('user_name', userInfo.user_name);
+    Cookies.set('user_name', userInfo.name);
     Cookies.set('roles', userInfo.roles);
 }
 

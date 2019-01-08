@@ -5,19 +5,19 @@ import { Message } from "element-ui";
 const config = {
     timeout: 10000,
     // 在发送请求之前对请求数据做处理
-    transformRequest: [
-        function (data) {
-        return typeof (data) == "object" ? Qs.stringify(data) : data;
-        }
-    ],
-    // 请求头信息
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    // 序列化param
-    paramsSerializer: function (params) {
-        return Qs.stringify(params)
-    },
+    // transformRequest: [
+    //     function (data) {
+    //     return typeof (data) == "object" ? Qs.stringify(data) : data;
+    //     }
+    // ],
+    // // 请求头信息
+    // headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    // },
+    // // 序列化param
+    // paramsSerializer: function (params) {
+    //     return Qs.stringify(params)
+    // },
     responseType: "json"
 }
 

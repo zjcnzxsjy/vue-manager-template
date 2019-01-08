@@ -64,7 +64,9 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['visitedViews']) //也打开的页签
+        ...mapGetters('TabsView', {
+            visitedViews: 'visitedViews'
+        }) //也打开的页签
     },
     methods:{
         //新开页签的信息
@@ -78,7 +80,7 @@ export default {
         addViewTabs() {
             this.watchScroll();
             this.refreshScroll();
-            this.$store.dispatch('addVisitedViews', this.generateRoute());
+            this.$store.dispatch('TabsView/addVisitedViews', this.generateRoute());
         },
         //页签点击事件
         onTabClick(thisTab, eve) {
@@ -98,7 +100,7 @@ export default {
         },
         //删除页签
         removeTab(tag, $event) {
-            this.$store.dispatch('delVisitedViews', tag).then(views => {
+            this.$store.dispatch('TabsView/delVisitedViews', tag).then(views => {
                 if (this.isActive(tag.path)) {
                     let latestView = views.slice(-1)[0];
                     if (latestView) {
@@ -186,13 +188,13 @@ export default {
         },
         //关闭其他页签事件回调
         closeOthersTags() {
-            this.$route.path !== '/mainIndex'? this.$store.dispatch('delOthersViews', this.$route) : this.$store.dispatch('delAllViews');
+            this.$route.path !== '/mainIndex'? this.$store.dispatch('TabsView/delOthersViews', this.$route) : this.$store.dispatch('delAllViews');
             this.watchScroll();
             this.refreshScroll(true);
         },
         //关闭所有页签事件回调
         closeAllTags() {
-            this.$store.dispatch('delAllViews');
+            this.$store.dispatch('TabsView/delAllViews');
             this.watchScroll();
             this.refreshScroll(true);
             this.$router.push('/mainIndex');

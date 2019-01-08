@@ -60,10 +60,20 @@ export default {
       }
     },
     computed: {
-      ...mapGetters([
-        'menuTheme',
-        'accessedRouters'
-      ]),
+      ...mapGetters(
+        'Permission', {
+          accessedRouters: 'accessedRouters'
+        }
+      ),
+      ...mapGetters(
+        'App', {
+          menuTheme: 'menuTheme'
+        }
+      ),
+      // ...mapGetters([
+      //   'Permission/accessedRouters',
+      //   'App/menuTheme'
+      // ]),
       menuActived() {
         return this.$route.path;
       },

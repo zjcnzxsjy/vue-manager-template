@@ -12,6 +12,8 @@
     "element-ui": "^2.4.7",
     "file-saver": "^2.0.0-rc.3",
     "js-cookie": "^2.2.0",
+    "lodash.isequal": "^4.5.0",
+    "mockjs": "^1.0.1-beta3",
     "nprogress": "^0.2.0",
     "qs": "^6.5.2",
     "vue": "^2.5.17",

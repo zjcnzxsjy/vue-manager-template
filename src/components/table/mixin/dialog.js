@@ -52,7 +52,7 @@ export default {
       /**
        * @description 表单模式
        */
-      formMode: 'edit',
+      mode: 'edit',
       /**
        * @description 编辑暂存数据，用于储存不在editTemplate中的数据
        */

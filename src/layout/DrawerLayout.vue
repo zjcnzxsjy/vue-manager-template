@@ -5,7 +5,7 @@
   @on-close='handleClose'>
       <div class='drawer-layout-body-theme'>
           <h3 class='drawer-layout-body-theme-title'>整体风格设置</h3>
-          <div class='drawer-layout-body-theme-blockCheckbox' @click='checkboxClick("setMenuTheme", $event)'>
+          <div class='drawer-layout-body-theme-blockCheckbox' @click='checkboxClick("App/setMenuTheme", $event)'>
             <el-tooltip 
             content="暗色菜单风格" 
             placement="top">
@@ -26,7 +26,7 @@
       </div>
       <div class='drawer-layout-body-theme'>
           <h3 class='drawer-layout-body-theme-title'>导航模式</h3>
-          <div class='drawer-layout-body-theme-blockCheckbox' @click='checkboxClick("setLayout", $event)'>
+          <div class='drawer-layout-body-theme-blockCheckbox' @click='checkboxClick("App/setLayout", $event)'>
             <el-tooltip 
             content="侧边菜单布局" 
             placement="top">
@@ -93,10 +93,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      "menuTheme",
-      "layout"
-    ])
+    // ...mapGetters([
+    //   "App/menuTheme",
+    //   "App/layout"
+    // ])
+    ...mapGetters('App', {
+      menuTheme: 'menuTheme',
+      layout: 'layout'
+    })
   },
   methods: {
     checkboxClick(dispatchType, event) {

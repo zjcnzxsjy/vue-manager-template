@@ -8,6 +8,7 @@ import NProgress from 'nprogress'; // progress bar
 import 'nprogress/nprogress.css'; // progress bar style
 import { getUserInfo } from './utils/Authority' // getUserInfo from cookie
 import request from './utils/Request';
+import './mock';
 import './style/icon/iconfont.css';
 
 NProgress.configure({ showSpinner: false });
@@ -29,10 +30,10 @@ router.beforeEach((to, from, next) => {
       NProgress.done();
     } else {
       if(userInfo.roles) {
-        if (store.getters.accessedRouters && 0 === store.getters.accessedRouters.length) {
-          store.dispatch('GenerateAccessedRoutes', userInfo.roles)
+        if (store.getters['Permission/accessedRouters'] && 0 === store.getters['Permission/accessedRouters'].length) {
+          store.dispatch('Permission/GenerateAccessedRoutes', userInfo.roles)
           .then(() => {
-            router.addRoutes(store.getters.accessedRouters);
+            router.addRoutes(store.getters['Permission/accessedRouters']);
             next();
           })
         } else {

@@ -5,29 +5,42 @@
       :indexColumn='indexColumn'
       :selectColumn='selectColumn'
       :columns='columns'
-      :data='data'>
-      <div slot='header'>
-        <el-button-group>
-          <el-button type="primary" icon="el-icon-plus" @click='add'>添加</el-button>
-          <el-button type="primary" icon="el-icon-edit">编辑</el-button>
-          <el-button type="primary" icon="el-icon-delete">删除</el-button>
-        </el-button-group>
-      </div>
+      :data='data'
+      :pagination='pagination'
+      @select='handleSelect'>
       <div
         class='form-class'
         slot='form'>
         <hs-form
-          :formDate='formData'
           :formOptions='formOptions'
           :formItemOptions='formItemOptions'>
         </hs-form>
       </div>
+      <div slot='toolbar'>
+        <el-button-group>
+          <el-button type="primary" icon="el-icon-plus" @click='add'>添加</el-button>
+          <el-button type="primary" icon="el-icon-edit" @click='edit'>编辑</el-button>
+          <el-button type="primary" icon="el-icon-delete">删除</el-button>
+        </el-button-group>
+      </div>
+      <hs-form-dialog
+        slot='dialog'
+        :dialogOptions='dialogOptions'>
+        <hs-form
+          slot='formDialog'
+          :formOptions='dialogFormOptions'
+          :formItemOptions='dialogFormItemOptions'>
+        </hs-form>
+      </hs-form-dialog>
     </hs-table>
+    
   </div>
 </template>
 <script>
 import hsTable from '@/components/table/Table'
-import hsForm from '@/components/form/Form'
+import hsFormDialog from '@/components/table/FormDialog'
+import hsForm from '@/components/table/Form'
+import base from '@/utils/Base'
 export default {
   name: 'baseTable',
   data() {
@@ -80,18 +93,27 @@ export default {
           address: '上海市普陀区金沙江路 1516 弄'
         }
       ],
-      formData: {},
       formOptions: {
-        inline: true
+        inline: false,
+        gutter: 20,
+        labelWidth: '90px'
+      },
+      dialogFormOptions: {
+        labelWidth: '80px'
       },
       formItemOptions: [
         {
           label: '活动名称' ,
           prop: 'name',
+          span: 6,
+          required: true,
+          rules: [
+            { required: true, message: '输入不能为空'}
+          ],
           children: [
             {
               component: {
-                name: 'el-input'
+                name: 'el-input',
               }
             }
           ]
@@ -99,6 +121,7 @@ export default {
         {
           label: '活动区域' ,
           prop: 'region',
+          span: 6,
           children: [
             {
               component: {
@@ -110,6 +133,7 @@ export default {
         {
           label: '活动形式' ,
           prop: 'type',
+          span: 6,
           children: [
             {
               component: {
@@ -121,6 +145,7 @@ export default {
         {
           label: '活动内容' ,
           prop: 'content',
+          span: 6,
           children: [
             {
               component: {
@@ -132,6 +157,7 @@ export default {
         {
           label: '活动时间' ,
           prop: 'time',
+          span: 6,
           children: [
             {
               component: {
@@ -140,16 +166,48 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      pagination: {
+        pageSize: 50,
+        pageSizes: [10, 50, 100, 200],
+        layout: 'total, sizes, prev, pager, next, jumper',
+        total: 100
+      },
+      dialogOptions: {
+        title: ''
+      },
+      dialogFormItemOptions: [
+        {
+          label: '活动名称' ,
+          prop: 'name',
+          children: [
+            {
+              component: {
+                name: 'el-input'
+              }
+            }
+          ]
+        }
+      ],
+      row: []
     }
   },
   components: {
     hsTable,
+    hsFormDialog,
     hsForm
   },
   methods: {
     add() {
+      this.dialogOptions.title ='添加';
       this.$refs.hsTable.handleAdd();
+    },
+    edit() {
+      this.dialogOptions.title ='编辑';
+      this.$refs.hsTable.handleEdit(this.row);
+    },
+    handleSelect(selection ,row) {
+      this.row = row;
     }
   }
 }
