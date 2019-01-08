@@ -70,8 +70,6 @@
         <el-popover
           ref="popover"
           placement="top"
-          title="显示列设置"
-          width="200"
           trigger="click"
           class='table-column-set'>
           <el-button slot="reference">显示列设置</el-button>

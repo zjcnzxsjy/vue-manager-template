@@ -25,7 +25,8 @@
       </div>
       <hs-form-dialog
         slot='dialog'
-        :dialogOptions='dialogOptions'>
+        :dialogOptions='dialogOptions'
+        @dialog-save='handleDialogSave'>
         <hs-form
           slot='formDialog'
           :formOptions='dialogFormOptions'
@@ -189,6 +190,7 @@ export default {
           ]
         }
       ],
+      mode: '',
       row: []
     }
   },
@@ -200,11 +202,16 @@ export default {
   methods: {
     add() {
       this.dialogOptions.title ='添加';
+      this.mode = 'add';
       this.$refs.hsTable.handleAdd();
     },
     edit() {
       this.dialogOptions.title ='编辑';
+      this.mode = 'edit';
       this.$refs.hsTable.handleEdit(this.row);
+    },
+    handleDialogSave({formData}) {
+      console.log(formData)
     },
     handleSelect(selection ,row) {
       this.row = row;

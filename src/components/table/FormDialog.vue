@@ -19,6 +19,7 @@
 <script>
 import emitter from '../src/emitter'
 import base from './mixin/base'
+import { deepClone } from '@/utils/Base'
 export default {
   name: 'hsFormDialog',
   mixins: [emitter, base],
@@ -66,10 +67,13 @@ export default {
   methods: {
     handleDialogSave() {
       this.formField.$refs.form.validate(valid => {
-        if (valid) {
+        console.log(valid)
+        if (!valid) {
           return false;
         }
-        let rowData = {};
+        this.$emit('dialog-save', {
+          formData: deepClone(this.formField.formData)
+        })
       })
     },
     dialogOpen() {

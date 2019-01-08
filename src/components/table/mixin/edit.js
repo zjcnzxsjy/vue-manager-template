@@ -1,4 +1,4 @@
-import { deepClone, findIndex } from '@/utils/Base'
+import { findIndex } from '@/utils/Base'
 import isEqual from 'lodash.isequal'
 export default {
   data () {
@@ -18,14 +18,13 @@ export default {
     handleEdit (row) {
       this.mode = 'edit';
       this.isDialogShow = true;
+      this.editIndex = findIndex(this.tableData, (value) => {
+        return isEqual(value, row);
+      });
       this.broadcast('hsFormDialog', 'dialog-open', {
         mode: 'edit',
         row
       });
-      this.editIndex = findIndex(this.tableData, (value, index) => {
-        return isEqual(this.tableData[index], value);
-      });
-      this.formData = deepClone(row);
     }
   }
 }
