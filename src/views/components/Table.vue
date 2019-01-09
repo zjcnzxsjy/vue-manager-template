@@ -7,6 +7,7 @@
       :columns='columns'
       :data='data'
       :pagination='pagination'
+      :options='options'
       @select='handleSelect'>
       <div
         class='form-class'
@@ -46,6 +47,9 @@ export default {
   name: 'baseTable',
   data() {
     return {
+      options: {
+        border: true
+      },
       indexColumn: {
         label: '序号',
         width: '50'

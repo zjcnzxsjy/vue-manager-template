@@ -58,6 +58,7 @@ export default {
   },
   data() {
     return {
+      tableColumns: this.columns,
       fields: []
     }
   },

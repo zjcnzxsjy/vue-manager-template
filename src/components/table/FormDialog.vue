@@ -67,7 +67,6 @@ export default {
   methods: {
     handleDialogSave() {
       this.formField.$refs.form.validate(valid => {
-        console.log(valid)
         if (!valid) {
           return false;
         }
