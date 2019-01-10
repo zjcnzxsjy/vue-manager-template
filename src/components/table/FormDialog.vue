@@ -34,7 +34,7 @@ export default {
        * @description dialog显示与隐藏
        */
       isDialogShow: false,
-      formField: {},
+      formField: null,
       mode: ''
     }
   },
@@ -47,18 +47,20 @@ export default {
     this.$on('dialog-open', ({ mode, row }) => {
       this.dialogOpen();
       this.mode = mode;
-      this.$nextTick(() => {
-        if (row) {
-          this.formField.formItemOptions.forEach((option) => {
-            console.log(row[option.prop])
-            this.$set(this.formField.formData, option.prop, row[option.prop]);
-          })
-        } else {
-          this.formField.formItemOptions.forEach((option) => {
-            this.$set(this.formField.formData, option.prop, '');
-          })
-        }
-      })
+      if (this.formField) {
+        this.formField.$refs.form.clearValidate();
+        this.$nextTick(() => {
+          if (row) {
+            this.formField.formItemOptions.forEach((option) => {
+              this.$set(this.formField.formData, option.prop, row[option.prop]);
+            })
+          } else {
+            this.formField.formItemOptions.forEach((option) => {
+              this.$set(this.formField.formData, option.prop, '');
+            })
+          }
+        })
+      }
     })
   },
   mounted() {

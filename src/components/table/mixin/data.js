@@ -54,6 +54,21 @@ export default {
      */
     selectColumn: {
       default: null
+    },
+    /**
+     * @description 是否显示过滤表单
+     */
+    filterForm: {
+      type: Boolean,
+      default: false
+    },
+    formOptions: {
+      type: Object,
+      default: null
+    },
+    formItemOptions: {
+      type: Array,
+      default: []
     }
   },
   data() {

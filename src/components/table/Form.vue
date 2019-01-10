@@ -46,7 +46,7 @@ export default {
     },
     formItemOptions: {
       type: Array,
-      default: null
+      default: []
     }
   },
   data() {
@@ -59,6 +59,11 @@ export default {
   },
   mounted() {
     this.dispatch('hsFormDialog', 'hs.addForm', this)
+  },
+  methods: {
+    // reset() {
+    //   this.$refs.resetFields();
+    // }
   }
 }
 </script>

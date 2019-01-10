@@ -8,20 +8,25 @@
       :data='data'
       :pagination='pagination'
       :options='options'
-      @select='handleSelect'>
-      <div
+      @select='handleSelect'
+      filterForm
+      :formOptions='formOptions'
+      :formItemOptions='formItemOptions'>
+      <!-- <div
         class='form-class'
         slot='form'>
         <hs-form
           :formOptions='formOptions'
           :formItemOptions='formItemOptions'>
         </hs-form>
-      </div>
+      </div> -->
       <div slot='toolbar'>
         <el-button-group>
+          <el-button type="primary" icon="el-icon-plus" @click='add'>重置</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click='add'>查询</el-button>
           <el-button type="primary" icon="el-icon-plus" @click='add'>添加</el-button>
           <el-button type="primary" icon="el-icon-edit" @click='edit'>编辑</el-button>
-          <el-button type="primary" icon="el-icon-delete">删除</el-button>
+          <el-button type="primary" icon="el-icon-delete" @click='remove'>删除</el-button>
         </el-button-group>
       </div>
       <hs-form-dialog
@@ -103,9 +108,6 @@ export default {
         gutter: 20,
         labelWidth: '90px'
       },
-      dialogFormOptions: {
-        labelWidth: '80px'
-      },
       formItemOptions: [
         {
           label: '活动名称' ,
@@ -181,10 +183,16 @@ export default {
       dialogOptions: {
         title: ''
       },
+      dialogFormOptions: {
+        labelWidth: '90px'
+      },
       dialogFormItemOptions: [
         {
           label: '活动名称' ,
           prop: 'name',
+          rules: [
+            { required: true, message: '输入不能为空', trigger: 'blur'}
+          ],
           children: [
             {
               component: {
@@ -195,6 +203,7 @@ export default {
         }
       ],
       mode: '',
+      selection: [],
       row: []
     }
   },
@@ -210,21 +219,48 @@ export default {
       this.$refs.hsTable.handleAdd();
     },
     edit() {
+      if(!this.howMuchCanSelect(true)) {
+        return false;
+      }
       this.dialogOptions.title ='编辑';
       this.mode = 'edit';
       this.$refs.hsTable.handleEdit(this.row);
+    },
+    remove() {
+      if(!this.howMuchCanSelect(false)) {
+        return false;
+      }
     },
     handleDialogSave({formData}) {
       console.log(formData)
     },
     handleSelect(selection ,row) {
+      this.selection = selection;
       this.row = row;
+    },
+    howMuchCanSelect(isJustOne) {
+      switch(this.selection.length) {
+        case 0:
+          this.$notify.warning({
+            message: '没有选中记录，请选中记录',
+            duration: 2000
+          })
+          return false;
+        case 1:
+          return true;
+        default: 
+          if(!!isJustOne) {
+            this.$notify.warning({
+              message: `选中了${selection.length}条记录，只能选中一条`,
+            duration: 2000
+            });
+            return false;
+          }
+          return true;
+      }
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-.form-class {
-  padding-top: 10px;
-}
 </style>

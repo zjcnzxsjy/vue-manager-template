@@ -5,8 +5,15 @@
     :element-loading-spinner="loadingOptions? handleAttribute(loadingOptions.spinner,null) : null"
     :element-loading-background="loadingOptions? handleAttribute(loadingOptions.background, null) : null">
       <div
-        class='table-header' v-if="$slots.header || $slots.form">
-        <slot name='form'></slot>
+        class='table-header' v-if="filterForm || toolbar">
+        <div
+          v-if='filterForm'
+          class='table-header-form'>
+          <hs-form
+            :formOptions='formOptions'
+            :formItemOptions='formItemOptions'>
+          </hs-form>
+        </div>
         <slot name='toolbar'></slot>
       </div>
       <div
@@ -133,6 +140,7 @@ import edit from './mixin/edit'
 // 
 
 import renderCustomComponent from './components/RenderCustomComponent.vue'
+import hsForm from './Form'
 
 export default {
   name: 'hsTable',
@@ -155,7 +163,8 @@ export default {
     }
   },
   components: {
-    renderCustomComponent
+    renderCustomComponent,
+    hsForm
   },
   created() {
     // this.$on('hs.addForm', (form) => {
@@ -164,6 +173,7 @@ export default {
     //     this.formField = form;
     //   }
     // })
+    console.log(this.filterForm)
     this.$on('hs.addDialog', (dialog) => {
       if (dialog) {
         this.dialogField = dialog;
@@ -175,10 +185,12 @@ export default {
 <style lang="scss">
 .table-wraper {
   .table-header {
-    
+    .table-header-form {
+      padding: 10px 5px;
+      background-color: #fff;
+    }
   }
   .table-body {
-    padding: 15px 0;
     overflow: hidden;
     .el-table--enable-row-hover .el-table__body tr:hover>td {
       background-color: #EAF5FF;
