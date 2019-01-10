@@ -58,6 +58,7 @@ export default {
     renderCustomComponent
   },
   mounted() {
+    this.dispatch('hsTable', 'hs.addForm', this)
     this.dispatch('hsFormDialog', 'hs.addForm', this)
   },
   methods: {

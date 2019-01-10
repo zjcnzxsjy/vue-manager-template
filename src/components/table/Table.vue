@@ -14,7 +14,16 @@
             :formItemOptions='formItemOptions'>
           </hs-form>
         </div>
-        <slot name='toolbar'></slot>
+        <div
+          v-if='toolbar'
+          class='table-header-toolbar'>
+          <el-button-group>
+            <!-- <el-button type="primary" icon="el-icon-plus" @click='add'>刷新</el-button> -->
+            <el-button type="primary" icon="el-icon-plus" @click='handleAdd'>添加</el-button>
+            <el-button type="primary" icon="el-icon-edit" @click='handleEdit'>编辑</el-button>
+            <!-- <el-button type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button> -->
+          </el-button-group>
+        </div>
       </div>
       <div
         class='table-body'>
@@ -167,13 +176,11 @@ export default {
     hsForm
   },
   created() {
-    // this.$on('hs.addForm', (form) => {
-      
-    //   if (form) {
-    //     this.formField = form;
-    //   }
-    // })
-    console.log(this.filterForm)
+    this.$on('hs.addForm', (form) => {
+      if (form) {
+        this.formField = form;
+      }
+    })
     this.$on('hs.addDialog', (dialog) => {
       if (dialog) {
         this.dialogField = dialog;
@@ -188,6 +195,9 @@ export default {
     .table-header-form {
       padding: 10px 5px;
       background-color: #fff;
+    }
+    .table-header-toolbar {
+      padding: 10px 0;
     }
   }
   .table-body {

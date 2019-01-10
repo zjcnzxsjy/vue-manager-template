@@ -69,12 +69,20 @@ export default {
     formItemOptions: {
       type: Array,
       default: []
+    },
+    /**
+     * @description 是否显示过滤表单
+     */
+    toolbar: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       tableColumns: this.columns,
-      fields: []
+      fields: [],
+      selection: []
     }
   },
   computed: {

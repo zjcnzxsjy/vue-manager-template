@@ -11,7 +11,8 @@
       @select='handleSelect'
       filterForm
       :formOptions='formOptions'
-      :formItemOptions='formItemOptions'>
+      :formItemOptions='formItemOptions'
+      toolbar>
       <!-- <div
         class='form-class'
         slot='form'>
@@ -20,7 +21,7 @@
           :formItemOptions='formItemOptions'>
         </hs-form>
       </div> -->
-      <div slot='toolbar'>
+      <!-- <div slot='toolbar'>
         <el-button-group>
           <el-button type="primary" icon="el-icon-plus" @click='add'>重置</el-button>
           <el-button type="primary" icon="el-icon-plus" @click='add'>查询</el-button>
@@ -28,7 +29,7 @@
           <el-button type="primary" icon="el-icon-edit" @click='edit'>编辑</el-button>
           <el-button type="primary" icon="el-icon-delete" @click='remove'>删除</el-button>
         </el-button-group>
-      </div>
+      </div> -->
       <hs-form-dialog
         slot='dialog'
         :dialogOptions='dialogOptions'
