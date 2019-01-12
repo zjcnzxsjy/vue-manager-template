@@ -10,6 +10,7 @@ export default {
      * @description 勾选数据时触发的事件
      */
     handleSelect (selection, row) {
+      this.selection = selection;
       this.$emit('select', selection, row)
     },
     /**

@@ -125,11 +125,12 @@ export default {
     border-bottom: 1px solid #e8e8e8;
   }
   .app-layout-main {
-    height: calc(100% - 64px);
+    height: calc(100% - 105px);
     width: 100%;
     background-color: #f0f2f5;
     padding: 24px 75px 0;
     box-sizing: border-box;
+    overflow-y: auto;
     .app-layout-main-content {
       flex: auto;
       min-height: 0;

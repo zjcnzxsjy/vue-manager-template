@@ -132,7 +132,16 @@
         class='table-footer'>
         <slot name='footer'></slot>
       </div>
-      <slot name='dialog'></slot>
+      <!-- <slot name='dialog'></slot> -->
+      <hs-form-dialog
+        :title='mode === "add"? addTitle : editTitle'
+        @dialog-save='handleDialogSave'>
+        <hs-form
+          slot='formDialog'
+          :formOptions='mode === "add"? addFormOptions : editFormOptions'
+          :formItemOptions='mode === "add"? addTemplate : editTemplate'>
+        </hs-form>
+      </hs-form-dialog>
   </div>
 </template>
 <script>
@@ -150,6 +159,7 @@ import edit from './mixin/edit'
 
 import renderCustomComponent from './components/RenderCustomComponent.vue'
 import hsForm from './Form'
+import hsFormDialog from './FormDialog'
 
 export default {
   name: 'hsTable',
@@ -173,7 +183,8 @@ export default {
   },
   components: {
     renderCustomComponent,
-    hsForm
+    hsForm,
+    hsFormDialog
   },
   created() {
     this.$on('hs.addForm', (form) => {

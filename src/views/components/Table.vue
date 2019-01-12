@@ -8,10 +8,13 @@
       :data='data'
       :pagination='pagination'
       :options='options'
-      @select='handleSelect'
       filterForm
       :formOptions='formOptions'
       :formItemOptions='formItemOptions'
+      :addFormOptions='dialogFormOptions'
+      :addFormItemOptions='dialogFormItemOptions'
+      :editFormOptions='dialogFormOptions'
+      :editFormItemOptions='dialogFormItemOptions'
       toolbar>
       <!-- <div
         class='form-class'
@@ -30,7 +33,7 @@
           <el-button type="primary" icon="el-icon-delete" @click='remove'>删除</el-button>
         </el-button-group>
       </div> -->
-      <hs-form-dialog
+      <!-- <hs-form-dialog
         slot='dialog'
         :dialogOptions='dialogOptions'
         @dialog-save='handleDialogSave'>
@@ -39,15 +42,13 @@
           :formOptions='dialogFormOptions'
           :formItemOptions='dialogFormItemOptions'>
         </hs-form>
-      </hs-form-dialog>
+      </hs-form-dialog> -->
     </hs-table>
     
   </div>
 </template>
 <script>
 import hsTable from '@/components/table/Table'
-import hsFormDialog from '@/components/table/FormDialog'
-import hsForm from '@/components/table/Form'
 import base from '@/utils/Base'
 export default {
   name: 'baseTable',
@@ -65,45 +66,23 @@ export default {
       },
       columns: [
         {
-          label: '日期',
-          prop: 'date',
-          width: '180'
-        },
-        {
           label: '姓名',
           prop: 'name',
-          width: '180'
         },
         {
-          label: '地址',
-          prop: 'address',
-          formatter(row, column, cellValue, index) {
-            return cellValue + '-1号';
-          }
+          label: '生日',
+          prop: 'birthday',
+        },
+        {
+          label: '年龄',
+          prop: 'age',
+        },
+        {
+          label: '城市',
+          prop: 'city',
         }
       ],
-      data: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ],
+      data: [],
       formOptions: {
         inline: false,
         gutter: 20,
@@ -176,10 +155,10 @@ export default {
         }
       ],
       pagination: {
-        pageSize: 50,
-        pageSizes: [10, 50, 100, 200],
+        pageSize: 10,
+        pageSizes: [10, 20, 50, 100],
         layout: 'total, sizes, prev, pager, next, jumper',
-        total: 100
+        total: 0
       },
       dialogOptions: {
         title: ''
@@ -209,57 +188,61 @@ export default {
     }
   },
   components: {
-    hsTable,
-    hsFormDialog,
-    hsForm
+    hsTable
+  },
+  created() {
+    this.getData();
   },
   methods: {
-    add() {
-      this.dialogOptions.title ='添加';
-      this.mode = 'add';
-      this.$refs.hsTable.handleAdd();
-    },
-    edit() {
-      if(!this.howMuchCanSelect(true)) {
-        return false;
-      }
-      this.dialogOptions.title ='编辑';
-      this.mode = 'edit';
-      this.$refs.hsTable.handleEdit(this.row);
-    },
-    remove() {
-      if(!this.howMuchCanSelect(false)) {
-        return false;
-      }
-    },
-    handleDialogSave({formData}) {
-      console.log(formData)
-    },
-    handleSelect(selection ,row) {
-      this.selection = selection;
-      this.row = row;
-    },
-    howMuchCanSelect(isJustOne) {
-      switch(this.selection.length) {
-        case 0:
-          this.$notify.warning({
-            message: '没有选中记录，请选中记录',
-            duration: 2000
-          })
-          return false;
-        case 1:
-          return true;
-        default: 
-          if(!!isJustOne) {
-            this.$notify.warning({
-              message: `选中了${selection.length}条记录，只能选中一条`,
-            duration: 2000
-            });
-            return false;
-          }
-          return true;
-      }
+    getData() {
+      this.$request.get('/api/usersTable')
+      .then(res => {
+        console.log(res)
+        this.data = res.data.data.user;
+        this.pagination.total = res.data.data.total;
+      })
     }
+    // add() {
+    //   this.$refs.hsTable.handleAdd();
+    // },
+    // edit() {
+    //   if(!this.howMuchCanSelect(true)) {
+    //     return false;
+    //   }
+    //   this.dialogOptions.title ='编辑';
+    //   this.mode = 'edit';
+    //   this.$refs.hsTable.handleEdit(this.row);
+    // },
+    // remove() {
+    //   if(!this.howMuchCanSelect(false)) {
+    //     return false;
+    //   }
+    // },
+    // handleSelect(selection ,row) {
+    //   this.selection = selection;
+    //   this.row = row;
+    // },
+    // howMuchCanSelect(isJustOne) {
+    //   switch(this.selection.length) {
+    //     case 0:
+    //       this.$notify.warning({
+    //         message: '没有选中记录，请选中记录',
+    //         duration: 2000
+    //       })
+    //       return false;
+    //     case 1:
+    //       return true;
+    //     default: 
+    //       if(!!isJustOne) {
+    //         this.$notify.warning({
+    //           message: `选中了${selection.length}条记录，只能选中一条`,
+    //         duration: 2000
+    //         });
+    //         return false;
+    //       }
+    //       return true;
+    //   }
+    // }
   }
 }
 </script>

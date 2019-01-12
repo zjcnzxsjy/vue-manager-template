@@ -37,13 +37,6 @@ export default {
       default: null
     },
     /**
-     * @description 表格配置
-     */
-    options: {
-      type: Object,
-      default: null
-    },
-    /**
      * @description 索引
      */
     indexColumn: {
@@ -76,13 +69,62 @@ export default {
     toolbar: {
       type: Boolean,
       default: false
+    },
+    /**
+     * @description dialog新增标题
+     */
+    addTitle: {
+      type: String,
+      default: '添加'
+    },
+    /**
+     * @description dialog修改标题
+     */
+    editTitle: {
+      type: String,
+      default: '编辑'
+    },
+    /**
+     * @description 新增表单设置
+     */
+    addFormOptions: {
+      type: Object,
+      default: null
+    },
+    /**
+     * @description 新增表单模板
+     */
+    addFormItemOptions: {
+      type: Array,
+      default: () => []
+    },
+    /**
+     * @description 编辑表单设置
+     */
+    editFormOptions: {
+      type: Object,
+      default: null
+    },
+    /**
+     * @description 修改表单模板
+     */
+    editFormItemOptions: {
+      type: Array,
+      default: () => []
+    },
+    dialogOptions: {
+      type: Object,
+      default: null
     }
   },
   data() {
     return {
       tableColumns: this.columns,
       fields: [],
-      selection: []
+      selection: [],
+      mode: '',
+      addTemplate: [],
+      editTemplate: []
     }
   },
   computed: {

@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    :title='dialogOptions.title'
+    :title='title'
     :visible.sync='isDialogShow'
     v-bind='dialogOptions'>
     <slot name='formDialog'></slot>
@@ -24,6 +24,10 @@ export default {
   name: 'hsFormDialog',
   mixins: [emitter, base],
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     dialogOptions: {
       default: null
     }
@@ -46,21 +50,6 @@ export default {
     });
     this.$on('dialog-open', ({ mode, row }) => {
       this.dialogOpen();
-      this.mode = mode;
-      if (this.formField) {
-        this.formField.$refs.form.clearValidate();
-        this.$nextTick(() => {
-          if (row) {
-            this.formField.formItemOptions.forEach((option) => {
-              this.$set(this.formField.formData, option.prop, row[option.prop]);
-            })
-          } else {
-            this.formField.formItemOptions.forEach((option) => {
-              this.$set(this.formField.formData, option.prop, '');
-            })
-          }
-        })
-      }
     })
   },
   mounted() {

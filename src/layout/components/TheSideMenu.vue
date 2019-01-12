@@ -152,6 +152,7 @@ export default {
       }
     }
     .app-layout-main {
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       flex: auto;
@@ -182,8 +183,8 @@ export default {
         border-bottom: 1px solid #e8e8e8;
       }
       .app-layout-main-content {
-        margin: 24px 24px 0;
-        padding: 0;
+        padding: 24px 24px 0;
+        overflow: auto;
       }
     }
 }

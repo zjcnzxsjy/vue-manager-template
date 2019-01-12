@@ -1,34 +1,6 @@
 export default {
   props: {
     /**
-     * @description dialog新增标题
-     */
-    addTitle: {
-      type: String,
-      default: '添加'
-    },
-    /**
-     * @description dialog修改标题
-     */
-    editTitle: {
-      type: String,
-      default: '编辑'
-    },
-    /**
-     * @description 新增表单模板
-     */
-    addTemplate: {
-      type: Object,
-      default: null
-    },
-    /**
-     * @description 修改表单模板
-     */
-    editTemplate: {
-      type: Object,
-      default: null
-    },
-    /**
      * @description 新增表单校验规则
      */
     addRules: {
@@ -67,4 +39,9 @@ export default {
       editTemplateStorage: {}
     }
   },
+  methods: {
+    handleDialogSave({formData}) {
+      console.log(formData)
+    },
+  }
 }

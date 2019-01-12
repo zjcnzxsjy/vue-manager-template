@@ -1,14 +1,21 @@
+import { deepClone } from '@/utils/Base'
 export default {
   methods: {
     /**
      * @description 新增行数据
      */
     handleAdd() {
-      this.dialogField.title ='添加';
       this.mode = 'add';
-      this.broadcast('hsFormDialog', 'dialog-open', {
+      this.$on('dialog-open', {
         mode: 'add'
       });
+      this.dialogField.dialogOpen();
+      if (this.addFormItemOptions && this.addFormItemOptions.length > 0) {
+        this.addTemplate = deepClone(this.addFormItemOptions);
+        this.addTemplate.forEach((option) => {
+          this.$set(this.formField.formData, option.prop, '');
+        })
+      }
     }
   }
 }
