@@ -22,10 +22,15 @@
         </div>
         <div class='app-layout-main'>
             <div class='app-layout-main-header'>
-              <i 
+              <!-- <i 
               class='icon-menu-fold'
               :class='isMenuFold? "third-icon-menu-fold" : "third-icon-menu-unfold"'
-              @click='menuFold'></i>
+              @click='menuFold'></i> -->
+              <hs-icon
+                class='icon-menu-fold'
+                :name='isMenuFold? "menu-fold" : "menu-unfold"'
+                @click='menuFold'>
+              </hs-icon>
               <div class='header-toolbar-right'>
                 <header-toolbar></header-toolbar>
               </div>

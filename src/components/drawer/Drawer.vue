@@ -23,7 +23,7 @@
 <script>
     const prefixCls = 'drawer-layout';
     export default {
-        name: 'Drawer',
+        name: 'hs-drawer',
         props: {
             value: {
                 type: Boolean,

@@ -1,22 +1,22 @@
 <template>
   <div class='wrapper'>
-    <skeleton
+    <hs-skeleton
       :loading='true'
       :avatar='false'
       avatarSize='large'
       avatarShape='circle'
       active>
       1111
-    </skeleton>
+    </hs-skeleton>
   </div>
 </template>
 <script>
-import skeleton from '@/components/skeleton/Skeleton';
+// import skeleton from '@/components/skeleton/Skeleton';
 export default {
   name: 'MainIndex',
-  components: {
-    skeleton
-  }
+  // components: {
+  //   skeleton
+  // }
 }
 </script>
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-  <drawer 
+  <hs-drawer 
   :value='visible'
   :showHead='false'
   @on-close='handleClose'>
@@ -70,16 +70,13 @@
           配置栏只在开发环境用于预览，生产环境不会展现，请拷贝后手动修改配置文件src/defaultSettings.js。
         </p>
       </div>
-  </drawer>
+  </hs-drawer>
 </template>
 <script>
-import drawer from '@/components/drawer/Drawer';
+
 import { mapGetters } from 'vuex'
 export default {
   name: 'DrawerLayout',
-  components: {
-    drawer
-  },
   props: {
     visible: {
       type: Boolean,

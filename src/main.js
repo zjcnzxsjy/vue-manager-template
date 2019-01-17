@@ -9,7 +9,7 @@ import 'nprogress/nprogress.css'; // progress bar style
 import { getUserInfo } from './utils/Authority' // getUserInfo from cookie
 import request from './utils/Request';
 import './mock';
-import './style/icon/iconfont.css';
+import './components';
 
 NProgress.configure({ showSpinner: false });
 

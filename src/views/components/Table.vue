@@ -197,7 +197,6 @@ export default {
     getData() {
       this.$request.get('/api/usersTable')
       .then(res => {
-        console.log(res)
         this.data = res.data.data.user;
         this.pagination.total = res.data.data.total;
       })

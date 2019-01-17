@@ -13,7 +13,7 @@ const subModules = require.context('@/views', true, /Store.js/);
 subModules.keys().forEach(fileName => {
   modules = Object.assign(modules, {...subModules[fileName]});
 })
-console.log(modules);
+
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
