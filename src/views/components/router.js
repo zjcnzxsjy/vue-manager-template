@@ -12,6 +12,12 @@ export const routers = [
         path: "table",
         name: "基础表格",
         componentUrl: "components/Table.vue"
+      },
+      {
+        id: "uploadExcel",
+        path: "uploadExcel",
+        name: "上传Excel",
+        componentUrl: "components/UploadExcel.vue"
       }
     ]
   }

@@ -191,7 +191,11 @@ export default {
     hsTable
   },
   created() {
+    console.log(this);
     this.getData();
+  },
+  mounted() {
+    console.log(this);
   },
   methods: {
     getData() {
