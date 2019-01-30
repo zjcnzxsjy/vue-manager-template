@@ -18,10 +18,9 @@
           v-if='toolbar'
           class='table-header-toolbar'>
           <el-button-group>
-            <!-- <el-button type="primary" icon="el-icon-plus" @click='add'>刷新</el-button> -->
             <el-button type="primary" icon="el-icon-plus" @click='handleAdd'>添加</el-button>
             <el-button type="primary" icon="el-icon-edit" @click='handleEdit'>编辑</el-button>
-            <!-- <el-button type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button> -->
+            <el-button type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button>
           </el-button-group>
         </div>
       </div>
@@ -155,6 +154,7 @@ import dialog from './mixin/dialog'
 import setTableColumn from './mixin/SetTableColumn'
 import add from './mixin/add'
 import edit from './mixin/edit'
+import remove from './mixin/Remove'
 // 
 
 import renderCustomComponent from './components/RenderCustomComponent.vue'
@@ -173,7 +173,8 @@ export default {
     dialog,
     setTableColumn,
     add,
-    edit
+    edit,
+    remove
   ],
   data() {
     return {

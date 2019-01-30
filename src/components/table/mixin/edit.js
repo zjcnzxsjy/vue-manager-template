@@ -14,7 +14,11 @@ export default {
      * @description 编辑行数据
      */
     handleEdit () {
+      if(!this.howMuchCanSelect(true)) {
+        return false;
+      }
       this.mode = 'edit';
+      this.formField.$refs.form.clearValidate();
       const editRow = this.selection[0];
       this.dialogField.dialogOpen();
       this.editIndex = findIndex(this.tableData, (value) => {

@@ -6,6 +6,7 @@ export default {
      */
     handleAdd() {
       this.mode = 'add';
+      this.formField.$refs.form.clearValidate();
       this.$on('dialog-open', {
         mode: 'add'
       });
