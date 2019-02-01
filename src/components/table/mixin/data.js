@@ -64,13 +64,6 @@ export default {
       default: []
     },
     /**
-     * @description 是否显示过滤表单
-     */
-    toolbar: {
-      type: Boolean,
-      default: false
-    },
-    /**
      * @description dialog新增标题
      */
     addTitle: {
@@ -115,6 +108,12 @@ export default {
     dialogOptions: {
       type: Object,
       default: null
+    },
+    /**
+     * @description 表格按钮
+     */
+    buttons: {
+      default: ''
     }
   },
   data() {
@@ -130,6 +129,23 @@ export default {
   computed: {
     tableData() {
       return deepClone(this.data);
+    },
+    buttonComponents() {
+      const shows = {
+        add: false,
+        search: false,
+        edit: false,
+        remove: false,
+        exportExcel: false
+      };
+      if (!this.buttons) {
+        return shows;
+      }
+      const components = this.buttons.split(',').map((item) => item.trim());
+      components.forEach(compo => {
+        shows[compo] = true;
+      })
+      return shows;
     }
   },
   methods: {

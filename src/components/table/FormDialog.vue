@@ -18,7 +18,7 @@
 </template>
 <script>
 import emitter from '../src/emitter'
-import base from './mixin/base'
+import base from './mixin/Base'
 import { deepClone } from '@/utils/Base'
 export default {
   name: 'hsFormDialog',

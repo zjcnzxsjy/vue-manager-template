@@ -15,7 +15,9 @@
       :addFormItemOptions='dialogFormItemOptions'
       :editFormOptions='dialogFormOptions'
       :editFormItemOptions='dialogFormItemOptions'
-      toolbar>
+      buttons='search,add,edit,remove,exportExcel'
+      @on-search='handleSearch'
+      @on-remove='handleRemove'>
       <!-- <div
         class='form-class'
         slot='form'>
@@ -204,48 +206,13 @@ export default {
         this.data = res.data.data.user;
         this.pagination.total = res.data.data.total;
       })
+    },
+    handleSearch(queryCondition) {
+      console.log(queryCondition)
+    },
+    handleRemove(selection) {
+      console.log(selection)
     }
-    // add() {
-    //   this.$refs.hsTable.handleAdd();
-    // },
-    // edit() {
-    //   if(!this.howMuchCanSelect(true)) {
-    //     return false;
-    //   }
-    //   this.dialogOptions.title ='编辑';
-    //   this.mode = 'edit';
-    //   this.$refs.hsTable.handleEdit(this.row);
-    // },
-    // remove() {
-    //   if(!this.howMuchCanSelect(false)) {
-    //     return false;
-    //   }
-    // },
-    // handleSelect(selection ,row) {
-    //   this.selection = selection;
-    //   this.row = row;
-    // },
-    // howMuchCanSelect(isJustOne) {
-    //   switch(this.selection.length) {
-    //     case 0:
-    //       this.$notify.warning({
-    //         message: '没有选中记录，请选中记录',
-    //         duration: 2000
-    //       })
-    //       return false;
-    //     case 1:
-    //       return true;
-    //     default: 
-    //       if(!!isJustOne) {
-    //         this.$notify.warning({
-    //           message: `选中了${selection.length}条记录，只能选中一条`,
-    //         duration: 2000
-    //         });
-    //         return false;
-    //       }
-    //       return true;
-    //   }
-    // }
   }
 }
 </script>

@@ -4,7 +4,7 @@ export default {
       if(!this.howMuchCanSelect()) {
         return false;
       }
-      this.$emit('remove');
+      this.$emit('on-remove', this.selection);
     }
   }
 }

@@ -5,22 +5,25 @@
     :element-loading-spinner="loadingOptions? handleAttribute(loadingOptions.spinner,null) : null"
     :element-loading-background="loadingOptions? handleAttribute(loadingOptions.background, null) : null">
       <div
-        class='table-header' v-if="filterForm || toolbar">
+        class='table-header' v-if="filterForm || buttons">
         <div
           v-if='filterForm'
           class='table-header-form'>
           <hs-form
+            ref='queryForm'
             :formOptions='formOptions'
             :formItemOptions='formItemOptions'>
           </hs-form>
         </div>
         <div
-          v-if='toolbar'
+          v-if='buttons'
           class='table-header-toolbar'>
           <el-button-group>
-            <el-button type="primary" icon="el-icon-plus" @click='handleAdd'>添加</el-button>
-            <el-button type="primary" icon="el-icon-edit" @click='handleEdit'>编辑</el-button>
-            <el-button type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button>
+            <el-button v-if='buttonComponents.search' type="primary" icon="el-icon-search" @click='handleSearch'>查询</el-button>
+            <el-button v-if='filterForm' type="primary" icon="third-icon-Reset" @click='handleReset'>重置</el-button>
+            <el-button v-if='buttonComponents.add' type="primary" icon="el-icon-plus" @click='handleAdd'>添加</el-button>
+            <el-button v-if='buttonComponents.edit' type="primary" icon="el-icon-edit" @click='handleEdit'>编辑</el-button>
+            <el-button v-if='buttonComponents.remove' type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button>
           </el-button-group>
         </div>
       </div>
@@ -144,16 +147,18 @@
   </div>
 </template>
 <script>
-import base from './mixin/base'
+import base from './mixin/Base'
 import emitter from '../src/emitter'
-import data from './mixin/data'
-import events from './mixin/events'
-import pagination from './mixin/pagination'
-import utils from './mixin/utils'
-import dialog from './mixin/dialog'
+import data from './mixin/Data'
+import events from './mixin/Events'
+import pagination from './mixin/Pagination'
+import utils from './mixin/Utils'
+import dialog from './mixin/Dialog'
 import setTableColumn from './mixin/SetTableColumn'
-import add from './mixin/add'
-import edit from './mixin/edit'
+import search from './mixin/Search'
+import reset from './mixin/Reset'
+import add from './mixin/Add'
+import edit from './mixin/Edit'
 import remove from './mixin/Remove'
 // 
 
@@ -172,6 +177,8 @@ export default {
     utils,
     dialog,
     setTableColumn,
+    search,
+    reset,
     add,
     edit,
     remove

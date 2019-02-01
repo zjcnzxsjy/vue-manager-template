@@ -51,7 +51,7 @@ export default {
   },
   data() {
     return {
-      formData: {}
+      formData: this.createData()
     }
   },
   components: {
@@ -62,9 +62,16 @@ export default {
     this.dispatch('hsFormDialog', 'hs.addForm', this)
   },
   methods: {
-    // reset() {
-    //   this.$refs.resetFields();
-    // }
+    createData() {
+      const data = {};
+      this.formItemOptions.forEach(option => {
+        data[option.prop] = '';
+      })
+      return data;
+    },
+    reset() {
+      this.$refs.form.resetFields();
+    }
   }
 }
 </script>
