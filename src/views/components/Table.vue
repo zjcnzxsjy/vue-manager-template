@@ -18,6 +18,14 @@
       buttons='search,add,edit,remove,exportExcel'
       @on-search='handleSearch'
       @on-remove='handleRemove'>
+      <template slot='custom-button'>
+        <el-button 
+          type="primary" 
+          :icon="!downloadLoading? 'el-icon-download' : 'el-icon-loading'" 
+          @click='hanldeDownload'>
+          下载
+        </el-button>
+      </template>
       <!-- <div
         class='form-class'
         slot='form'>
@@ -185,19 +193,14 @@ export default {
         }
       ],
       mode: '',
-      selection: [],
-      row: []
+      downloadLoading: false
     }
   },
   components: {
     hsTable
   },
   created() {
-    console.log(this);
     this.getData();
-  },
-  mounted() {
-    console.log(this);
   },
   methods: {
     getData() {
@@ -212,6 +215,39 @@ export default {
     },
     handleRemove(selection) {
       console.log(selection)
+    },
+    async hanldeDownload() {
+      this.downloadLoading = true;
+      const tHeader = this.columns.map(column => column.label);
+      let selection = this.$refs.hsTable.selection;
+      let data = [];
+      if (selection && selection.length > 0) {
+        data = this.filterData(selection);
+      } else {
+        data = this.filterData((await this.$request.get('/api/usersTable')).data.data.user);
+      }
+
+      import('@/utils/Export2Excel').then(excel => {
+          excel.export_json_to_excel({
+              header: tHeader, //表头 必填
+              data, //具体数据 必填
+              filename: '新建excel', //非必填
+              autoWidth: true, //非必填
+              bookType: 'xlsx' //非必填
+          })
+      })
+      this.downloadLoading = false;
+    },
+    filterData(datas, prop) {
+      const result = []
+      for (let i = 0, l = datas.length; i < l; i++) {
+        if (typeof datas[i] === 'object') {
+          result.push(this.columns.map(column => {
+             return datas[i][column.prop];
+          }))
+        }
+      }
+      return result;
     }
   }
 }

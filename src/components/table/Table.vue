@@ -24,6 +24,7 @@
             <el-button v-if='buttonComponents.add' type="primary" icon="el-icon-plus" @click='handleAdd'>添加</el-button>
             <el-button v-if='buttonComponents.edit' type="primary" icon="el-icon-edit" @click='handleEdit'>编辑</el-button>
             <el-button v-if='buttonComponents.remove' type="primary" icon="el-icon-delete" @click='handleRemove'>删除</el-button>
+            <slot name='custom-button'></slot>
           </el-button-group>
         </div>
       </div>

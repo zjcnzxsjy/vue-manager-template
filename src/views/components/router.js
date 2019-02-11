@@ -5,7 +5,7 @@ export const routers = [
     pid: 'root',
     path: '/components/',
     name: '组件示例',
-    icon: 'third-icon-icon-test',
+    icon: 'third-icon-component',
     children: [
       {
         id: "table",
