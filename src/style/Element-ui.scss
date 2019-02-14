@@ -1,0 +1,17 @@
+.menu--collapse {
+  width: 80px;
+  text-align: center;
+}
+// .el-menu-item i {
+//   transition: font-size .15s cubic-bezier(.215,.61,.355,1),margin .3s cubic-bezier(.645,.045,.355,1);
+// }
+.menu--unCollapse {
+  .el-menu-item > i, .el-submenu__title > i  {
+    margin-right: 10px;
+    font-size: 20px;
+  }
+}
+
+.menu--collapse .el-menu-item  i, .el-submenu__title i {
+  font-size: 24px;
+}
