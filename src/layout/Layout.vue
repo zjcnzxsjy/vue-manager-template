@@ -1,7 +1,10 @@
 <template>
   <div style='height: 100%;'>
     <div :is='layout' :key='layout'></div>
-    <div class='components-setting' @click='visible = true'>
+    <div 
+      v-if='"production" !== env'
+      class='components-setting' 
+      @click='visible = true'>
         <i class='el-icon-setting'></i>
     </div>
     <drawer-layout :visible='visible' @on-close='handleClose'></drawer-layout>
@@ -21,6 +24,7 @@ export default {
     },
     data() {
       return {
+        env: process.env.NODE_ENV,
         visible: false
       }
     },

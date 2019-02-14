@@ -21,7 +21,7 @@
           :class="isActive('/mainIndex')?'active':''"
           @click='changeTab("/mainIndex")'>
           <i 
-            class='el-icon-third-dashboard' 
+            class='third-icon-dashbord' 
             style='font-size:14px;'>
           </i>
           首页
@@ -31,7 +31,7 @@
           class="nav-view"
           :class="isActive(tag.path)?'active':''"
           @click.self='changeTab(tag.path, tag.query)'>
-          {{tag.name}}
+          {{tag.title}}
           <i 
             class='el-icon-close tab-close' 
             @click='removeTab(tag, $event)'></i>
@@ -214,19 +214,6 @@ export default {
     .nav-bar{
         display: flex;
         align-items: center;
-        // border-bottom: 1px solid #d8dce5;
-        .el-col{
-            &:first-child{
-                text-align: center;
-            }
-            &:last-child{
-                text-align: center;
-            }
-            i{
-                cursor: pointer;
-                font-size: 20px;
-            }
-        }
         .nav-container{
             position: relative;
             white-space: nowrap;
@@ -273,7 +260,7 @@ export default {
                     border-bottom: 3px solid #65778b;
                     transition: all .2s linear;
                     box-sizing: border-box;
-                    z-index: -1;
+                    //z-index: -1;
                 }
                 &:hover::before {
                     width: 100%;

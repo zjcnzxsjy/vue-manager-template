@@ -8,6 +8,9 @@ const tabsView = {
         //visitedViews: state => state.visitedViews
         visitedViews(state) {
             return state.visitedViews;
+        },
+        cacheViews(state) {
+            return state.cacheViews;
         }
     },
     mutations: {
@@ -16,12 +19,12 @@ const tabsView = {
                 if (state.visitedViews.some(v => v.path === view.path)) return;
                 state.visitedViews.push({
                     name: view.name,
+                    title: view.meta.title,
                     path: view.path,
-                    query: view.query,
-                    compName: view.meta.compName || 'no-compName'
+                    query: view.query
                 });
                 if (!view.meta.noCache) {
-                    state.cacheViews.push(view.meta.compName);
+                    state.cacheViews.push(view.name);
                 }
                 
             }
@@ -34,7 +37,7 @@ const tabsView = {
                 }
             }
             for (const i of state.cacheViews) {
-                if(i === view.compName) {
+                if(i === view.name) {
                     const index = state.cacheViews.indexOf(i);
                     state.cacheViews.splice(index, 1)
                 }
@@ -46,8 +49,8 @@ const tabsView = {
                     return state.visitedViews.slice(index, index + 1);
                 }
             })
-            state.cacheViews = state.cacheViews.filter((compName, index) => {
-                if (compName === view.compName) {
+            state.cacheViews = state.cacheViews.filter((name, index) => {
+                if (name === view.name) {
                     return state.cacheViews.slice(index, index + 1);
                 }
             })

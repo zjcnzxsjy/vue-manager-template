@@ -27,7 +27,9 @@
       </div>
       <div class='app-layout-main'>
         <div class='app-layout-main-content'>
-          <router-view />
+          <keep-alive :include='cacheViews'>
+            <router-view :key="key"/>
+          </keep-alive>
         </div>
       </div>
   </div>
@@ -73,6 +75,13 @@ export default {
           return '#BFCBD9';
         }
         return '#FFD04B'
+      },
+      cacheViews() {
+        let temp = ['mainIndex'];
+        return temp.concat(this.$store.getters['TabsView/cacheViews']);
+      },
+      key() {
+        return this.$route.fullPath;
       }
     }
 }

@@ -46,9 +46,12 @@ const oriRouters = [
   {
     id: '404',
     path: '/404',
-    name: '404错误页面',
+    name: 'error404',
     component: () => import("./views/errorPage/404.vue"),
-    icon: 'third-icon-icon-test'
+    meta: {
+      title: '404错误页面',
+      icon: 'third-icon-icon-test'
+    }
   },
   {
     path: '*',

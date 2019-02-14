@@ -14,4 +14,5 @@ body,
 }
 @import "./style/Reset.css";
 @import "./style/Global.scss";
+@import "./style/Element-ui.scss";
 </style>
