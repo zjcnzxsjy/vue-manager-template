@@ -1,3 +1,4 @@
+import { deepClone } from '@/utils/Base'
 export default {
   props: {
     /**
@@ -26,22 +27,29 @@ export default {
        */
       mode: 'edit',
       /**
-       * @description 编辑暂存数据，用于储存不在editTemplate中的数据
+       * @description 编辑暂存数据
        */
       editDataStorage: {},
       /**
-       * @description 新增表单模板暂存
+       * @description 新增暂存数据
        */
-      addTemplateStorage: {},
-      /**
-       * @description 修改表单模板暂存
-       */
-      editTemplateStorage: {}
+      addDataStorage: {},
     }
   },
   methods: {
     handleDialogSave({formData}) {
-      console.log(formData)
+      if (this.mode === 'edit') {
+        this.editDataStorage = deepClone(formData);
+        this.$emit('row-edit', {
+          index: this.editIndex,
+          row: this.editDataStorage
+        })
+      } else if (this.mode === 'add') {
+        this.addDataStorage = formData;
+        this.$emit('row-add', {
+          row: this.addDataStorage
+        })
+      }
     },
   }
 }

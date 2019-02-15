@@ -18,13 +18,13 @@ export default {
         return false;
       }
       this.mode = 'edit';
+      this.editDataStorage = {}; //清空编辑暂存数据
       this.formField.$refs.form.clearValidate();
       const editRow = this.selection[0];
       this.dialogField.dialogOpen();
       this.editIndex = findIndex(this.tableData, (value) => {
         return isEqual(value, editRow);
       });
-      console.log(this.editIndex)
       this.$on('dialog-open', {
         mode: 'edit',
         index: this.editIndex,

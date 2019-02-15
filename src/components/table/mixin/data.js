@@ -55,6 +55,9 @@ export default {
       type: Boolean,
       default: false
     },
+    /**
+     * @description 筛选条件表单
+     */
     formOptions: {
       type: Object,
       default: null

@@ -1,6 +1,7 @@
 <template>
   <div
     class='table-wraper'
+    v-loading='loading'
     :element-loading-text="loadingOptions? handleAttribute(loadingOptions.text,null) : null"
     :element-loading-spinner="loadingOptions? handleAttribute(loadingOptions.spinner,null) : null"
     :element-loading-background="loadingOptions? handleAttribute(loadingOptions.background, null) : null">
@@ -65,7 +66,7 @@
             <template
               v-for="(item, index) in tableColumns">
               <el-table-column
-              v-if='item.hiddenColumn !== true'
+              v-if='item.hiddenColumn !== true && (item.type !== "selection" && item.type !== "index")'
               :key='index'
               :prop='item.prop? item.prop : null'
               v-bind='item'>
