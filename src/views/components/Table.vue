@@ -17,7 +17,9 @@
       :editFormItemOptions='dialogFormItemOptions'
       buttons='search,add,edit,remove,exportExcel'
       @on-search='handleSearch'
-      @on-remove='handleRemove'>
+      @row-remove='handleRemove'
+      @row-add='handleAdd'
+      @row-edit='handleEdit'>
       <template slot='custom-button'>
         <el-button 
           type="primary" 
@@ -215,6 +217,12 @@ export default {
     },
     handleRemove(selection) {
       console.log(selection)
+    },
+    handleAdd({row}) {
+      console.log(row);
+    },
+    handleEdit({index, row}) {
+      console.log(index, row);
     },
     async hanldeDownload() {
       this.downloadLoading = true;

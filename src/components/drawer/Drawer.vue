@@ -25,45 +25,78 @@
     export default {
         name: 'hs-drawer',
         props: {
+            /**
+             * @description 是否显示
+             */
             value: {
                 type: Boolean,
                 default: false
             },
+            /**
+             * @description 标题
+             */
             title: {
                 type: String
             },
+            /**
+             * @description drawer宽度
+             */
             width: {
                 type: [Number, String],
                 default: 256
             },
+            /**
+             * @description 是否显示关闭按钮
+             */
             closable: {
                 type: Boolean,
                 default: true
             },
+            /**
+             * @description 遮罩是否可以关闭
+             */
             maskClosable: {
                 type: Boolean,
                 default: true
             },
+            /**
+             * @description 是否有遮罩
+             */
             mask: {
                 type: Boolean,
                 default: true
             },
+            /**
+             * @description 遮罩样式
+             */
             maskStyle: {
                 type: Object
             },
+            /**
+             * @description drawer body的样式
+             */
             styles: {
                 type: Object
             },
+            /**
+             * @description drawer显示的位置
+             */
             placement: {
                 validator (value) {
                     return ['left', 'right'].indexOf(value);
                 },
                 default: 'right'
             },
+            /**
+             * @description drawer z-index值
+             */
             zIndex: {
                 type: Number,
                 default: 1000
             },
+            /**
+             * @description drawer 样式名称
+             */
             className: {
                 type: String
             },

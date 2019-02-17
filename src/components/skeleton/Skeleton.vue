@@ -42,39 +42,69 @@
 export default {
   name: 'Skeleton',
   props: {
+    /**
+     * @description 是否处于加载状态
+     */
     loading: {
       type: Boolean,
       default: true
     },
+    /**
+     * @description 是否有头像
+     */
     avatar: {
       type: Boolean,
       default: false
     },
+    /**
+     * @description 头像大小
+     */
     avatarSize: {
       type: String,
       default: 'large'
     },
+    /**
+     * @description 头像形状
+     */
     avatarShape: {
       type: String,
       default: 'square'
     },
+    /**
+     * @description 是否激活
+     */
     active: {
       type: Boolean,
       default: false
     },
+    /**
+     * @description 是否有标题
+     */
     title: {
       type: Boolean,
       default: true
     },
+    /**
+     * @description 标题宽度
+     */
     titleWidth: String,
+    /**
+     * @description 是否有段落
+     */
     paragraph: {
       type: Boolean,
       default: true
     },
+    /**
+     * @description 段落行数
+     */
     paragraphRows: {
       type: Number,
       default: 2
     },
+    /**
+     * @description 段落宽度
+     */
     paragraphWidth: [String, Array]
   },
   computed: {
