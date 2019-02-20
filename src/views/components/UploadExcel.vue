@@ -38,6 +38,7 @@ export default {
     },
     handleSuccess({ results, header }) {
       this.tableData = results;
+      console.log(results)
       this.tableHeader = header;
       this.value = this.tableData[1][this.tableHeader[1]];
     }

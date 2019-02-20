@@ -1,6 +1,5 @@
 import Vue from 'vue';
-import hsTable from './table/Table'
-import './icon/icon/iconfont.css';
+import './icon/iconfont/iconfont.css';
 
 
 Vue.component('hs-drawer', () => import('./drawer/Drawer'));
