@@ -7,7 +7,8 @@ module.exports = {
     port: 8092,
     proxy: {
       "/api/*": {
-        target: "https://www.easy-mock.com/mock/5b95cb4a9b7e7a16f787f6e2",
+        //target: "https://www.easy-mock.com/mock/5b95cb4a9b7e7a16f787f6e2",
+        target: 'http://localhost:3000',
         ws: true,
         changeOrigin: true
       }

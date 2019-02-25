@@ -11,6 +11,7 @@
       filterForm
       :formOptions='formOptions'
       :formItemOptions='formItemOptions'
+      :dialogOptions='dialogOptions'
       :addFormOptions='dialogFormOptions'
       :addFormItemOptions='dialogFormItemOptions'
       :editFormOptions='dialogFormOptions'
@@ -19,7 +20,9 @@
       @on-search='handleSearch'
       @row-remove='handleRemove'
       @row-add='handleAdd'
-      @row-edit='handleEdit'>
+      @row-edit='handleEdit'
+      @pagination-size-change='handlePaginationSizeChange'
+      @pagination-current-change='handlePaginationCurrentChange'>
       <template slot='custom-button'>
         <el-button 
           type="primary" 
@@ -61,7 +64,7 @@
 </template>
 <script>
 import hsTable from '@/components/table/Table'
-import base from '@/utils/Base'
+import {deepClone} from '@/utils/Base'
 export default {
   name: 'baseTable',
   data() {
@@ -90,6 +93,10 @@ export default {
           prop: 'age',
         },
         {
+          label: '学历',
+          prop: 'education'
+        },
+        {
           label: '城市',
           prop: 'city',
         }
@@ -102,13 +109,12 @@ export default {
       },
       formItemOptions: [
         {
-          label: '活动名称' ,
+          label: '姓名' ,
           prop: 'name',
           span: 6,
-          required: true,
-          rules: [
-            { required: true, message: '输入不能为空'}
-          ],
+          // rules: [
+          //   { required: true, message: '输入不能为空'}
+          // ],
           children: [
             {
               component: {
@@ -118,70 +124,161 @@ export default {
           ]
         },
         {
-          label: '活动区域' ,
-          prop: 'region',
+          label: '年龄' ,
+          prop: 'age',
           span: 6,
           children: [
             {
               component: {
-                name: 'el-input'
+                name: 'el-input-number',
+                value: 2,
+                props: {
+                  controlsPosition: 'right'
+                }
               }
             }
           ]
         },
         {
-          label: '活动形式' ,
-          prop: 'type',
+          label: '学历' ,
+          prop: 'education',
           span: 6,
           children: [
             {
               component: {
-                name: 'el-input'
-              }
-            }
-          ]
-        },
-        {
-          label: '活动内容' ,
-          prop: 'content',
-          span: 6,
-          children: [
-            {
-              component: {
-                name: 'el-input'
-              }
-            }
-          ]
-        },
-        {
-          label: '活动时间' ,
-          prop: 'time',
-          span: 6,
-          children: [
-            {
-              component: {
-                name: 'el-input'
+                name: 'el-select',
+                children: [{
+                  name: 'el-option',
+                  value: 'doctor',
+                  props: {
+                    label: '博士'
+                  }
+                }, {
+                  name: 'el-option',
+                  value: 'master',
+                  props: {
+                    label: '硕士'
+                  }
+                }, {
+                  name: 'el-option',
+                  value: 'undergraduate',
+                  props: {
+                    label: '大学本科'
+                  }
+                }]
               }
             }
           ]
         }
       ],
       pagination: {
+        start: 0,
         pageSize: 10,
         pageSizes: [10, 20, 50, 100],
         layout: 'total, sizes, prev, pager, next, jumper',
         total: 0
       },
       dialogOptions: {
-        title: ''
+        width: '450px'
       },
       dialogFormOptions: {
         labelWidth: '90px'
       },
       dialogFormItemOptions: [
         {
-          label: '活动名称' ,
+          label: '姓名' ,
           prop: 'name',
+          rules: [
+            { required: true, message: '输入不能为空', trigger: 'blur'}
+          ],
+          children: [
+            {
+              component: {
+                name: 'el-input'
+              }
+            }
+          ]
+        },
+        {
+          label: '生日' ,
+          prop: 'birthday',
+          rules: [
+            { required: true, message: '输入不能为空', trigger: 'change'}
+          ],
+          children: [
+            {
+              component: {
+                name: 'el-date-picker',
+                props: {
+                  type: 'date',
+                  placeholder: "选择日期时间",
+                  valueFormat: 'yyyy-MM-dd'
+                }
+              }
+            }
+          ]
+        },
+        {
+          label: '年龄',
+          prop: 'age',
+          rules: [
+            { required: true, message: '输入不能为空', trigger: 'change'}
+          ],
+          children: [
+            {
+              component: {
+                name: 'el-input-number',
+                props: {
+                  controlsPosition: 'right',
+                  style: 'width: 100%'
+                }
+              }
+            }
+          ]
+        },
+        {
+          label: '学历',
+          prop: 'education',
+          rules: [
+            { required: true, message: '输入不能为空', trigger: 'change'}
+          ],
+          children: [
+            {
+              component: {
+                name: 'el-select',
+                props: {
+                  style: 'width: 100%'
+                },
+                children: [
+                  {
+                    name: 'el-option',
+                    value: 'doctor',
+                    props: {
+                      label: '博士'
+                    }
+                  },
+                  {
+                    name: 'el-option',
+                    value: 'master',
+                    props: {
+                      label: '硕士'
+                    }
+                  },
+                  {
+                    name: 'el-option',
+                    value: 'undergraduate',
+                    props: {
+                      label: '大学本科'
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          label: '城市',
+          prop: 'city',
           rules: [
             { required: true, message: '输入不能为空', trigger: 'blur'}
           ],
@@ -195,7 +292,8 @@ export default {
         }
       ],
       mode: '',
-      downloadLoading: false
+      downloadLoading: false,
+      queryCondition: null
     }
   },
   components: {
@@ -205,24 +303,46 @@ export default {
     this.getData();
   },
   methods: {
-    getData() {
-      this.$request.get('/api/usersTable')
+    getData(query) {
+      let params = deepClone(query) || {};
+      params = Object.assign(params, {start: this.pagination.start, limit: this.pagination.pageSize});
+      this.$request.get('/api/table', {
+        params: params
+      })
       .then(res => {
-        this.data = res.data.data.user;
-        this.pagination.total = res.data.data.total;
+        this.data = res.data.datas;
+        this.pagination.total = res.data.counts;
       })
     },
     handleSearch(queryCondition) {
-      console.log(queryCondition)
+      this.queryCondition = queryCondition;
+      this.getData(this.queryCondition);
     },
     handleRemove(selection) {
       console.log(selection)
+      const ids = selection.map(item => {
+        return item._id;
+      })
+      this.$request.delete('/api/table', {
+        params: {
+          ids: JSON.stringify(ids)
+        }
+      })
+      .then(res => {
+        this.getData(this.queryCondition);
+      })
     },
-    handleAdd({row}) {
-      console.log(row);
+    handleAdd({data}) {
+      this.$request.post('/api/table', data)
+      .then(res => {
+        this.getData(this.queryCondition);
+      })
     },
-    handleEdit({index, row}) {
-      console.log(index, row);
+    handleEdit({index, data}) {
+      this.$request.put(`/api/table/${this.$refs.hsTable.selection[0]._id}`, data)
+      .then(res => {
+        this.getData(this.queryCondition);
+      })
     },
     async hanldeDownload() {
       this.downloadLoading = true;
@@ -256,6 +376,14 @@ export default {
         }
       }
       return result;
+    },
+    handlePaginationSizeChange(pageSize) {
+      this.pagination.pageSize = pageSize;
+      this.getData(this.queryCondition);
+    },
+    handlePaginationCurrentChange(currentPage) {
+      this.pagination.start = (currentPage - 1) * this.pagination.pageSize;
+      this.getData(this.queryCondition);
     }
   }
 }

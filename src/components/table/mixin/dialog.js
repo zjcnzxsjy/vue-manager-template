@@ -38,16 +38,17 @@ export default {
   },
   methods: {
     handleDialogSave({formData}) {
+      this.dialogField.dialogClose();
       if (this.mode === 'edit') {
         this.editDataStorage = deepClone(formData);
         this.$emit('row-edit', {
           index: this.editIndex,
-          row: this.editDataStorage
+          data: this.editDataStorage
         })
       } else if (this.mode === 'add') {
         this.addDataStorage = formData;
         this.$emit('row-add', {
-          row: this.addDataStorage
+          data: this.addDataStorage
         })
       }
     },

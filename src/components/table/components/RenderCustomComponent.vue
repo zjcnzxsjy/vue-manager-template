@@ -25,10 +25,29 @@ export default {
      */
     scope: {
       default: null
+    },
+    children: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   render (h) {
-    let self = this
+    let self = this;
+    let options = [];
+    
+    options = this.children.map(child => {
+      return h(
+        child.name,
+        {
+          props: {
+            value: child.value,
+            ...child.props
+          }
+        }
+      )
+    });
     return h(self.componentName, {
       props: {
         value: self.value,
@@ -40,7 +59,8 @@ export default {
           self.$emit('input', event)
         }
       }
-    })
+    },
+    [options])
   }
 }
 </script>

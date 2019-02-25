@@ -139,7 +139,8 @@
       <!-- <slot name='dialog'></slot> -->
       <hs-form-dialog
         :title='mode === "add"? addTitle : editTitle'
-        @dialog-save='handleDialogSave'>
+        @dialog-save='handleDialogSave'
+        :dialogOptions='dialogOptions'>
         <hs-form
           slot='formDialog'
           :formOptions='mode === "add"? addFormOptions : editFormOptions'

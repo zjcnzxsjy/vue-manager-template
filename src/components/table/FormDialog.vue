@@ -48,9 +48,6 @@ export default {
         this.formField = form;
       }
     });
-    this.$on('dialog-open', ({ mode, row }) => {
-      this.dialogOpen();
-    })
   },
   mounted() {
     this.dispatch('hsTable', 'hs.addDialog', this);
@@ -62,7 +59,7 @@ export default {
           return false;
         }
         this.$emit('dialog-save', {
-          formData: deepClone(this.formField.formData)
+          formData: Object.assign(this.formField.formData)
         })
       })
     },

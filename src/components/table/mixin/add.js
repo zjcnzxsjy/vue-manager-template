@@ -8,7 +8,7 @@ export default {
       this.mode = 'add';
       this.addDataStorage = {};  //清空新增暂存数据
       this.formField.$refs.form.clearValidate();
-      this.$on('dialog-open', {
+      this.$emit('dialog-open', {
         mode: 'add'
       });
       this.dialogField.dialogOpen();

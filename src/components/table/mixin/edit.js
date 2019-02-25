@@ -25,7 +25,7 @@ export default {
       this.editIndex = findIndex(this.tableData, (value) => {
         return isEqual(value, editRow);
       });
-      this.$on('dialog-open', {
+      this.$emit('dialog-open', {
         mode: 'edit',
         index: this.editIndex,
         row: editRow

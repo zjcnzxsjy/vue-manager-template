@@ -36,11 +36,12 @@ const request = axios.create(config);
 
 request.interceptors.response.use(
     response => {
-        if (0 !== response.data.code) {
+        console.log(response)
+        if ('get' !== response.config.method) {
             Message({
                 showClose: true,
-                message: response.data.msg,
-                type: 'error'
+                message: response.data.message,
+                type: 0 === response.data.code? 'success' : 'error'
             });
         }
         return response;
